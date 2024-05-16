@@ -23,10 +23,9 @@ public class BackToFutureApplication {
     public static void main(String[] args) {
         ApplicationContext applicationContext = SpringApplication.run(BackToFutureApplication.class, args);
         PriceCalculatorService priceCalculatorService = applicationContext.getBean(PriceCalculatorService.class);
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your string: ");
-        List inputList = new ArrayList();
-        try {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("Enter your string: ");
+            List<String> inputList = new ArrayList<>();
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 if (!line.equalsIgnoreCase("END")) {
@@ -36,10 +35,6 @@ public class BackToFutureApplication {
                     System.exit(0);
                     scanner.close();
                 }
-            }
-        } finally {
-            if (scanner != null) {
-                scanner.close();
             }
         }
     }

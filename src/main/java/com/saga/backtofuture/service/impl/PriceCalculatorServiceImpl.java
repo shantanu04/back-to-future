@@ -20,15 +20,15 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
     private static final Integer SAGA_DVD_COST = 15;
     private static final Integer NON_SAGA_DVD_COST = 20;
 
-    private static final Set<String> STANDARD_SET = new HashSet(Arrays.asList(SAGA_MOVIE_1, SAGA_MOVIE_2, SAGA_MOVIE_3));
+    private static final Set<String> STANDARD_SET = new HashSet<>(Arrays.asList(SAGA_MOVIE_1, SAGA_MOVIE_2, SAGA_MOVIE_3));
 
     private static final Logger LOGGER = Logger.getLogger(PriceCalculatorServiceImpl.class.getName());
 
     @Override
     public Integer calculateTotalPrice(List<String> inputMovieList) {
         LOGGER.info("Calculate total price of all dvds");
-        Map<String, Integer> sagaMoviesMap = new HashMap();
-        Map<String, Integer> nonSagaMoviesMap = new HashMap();
+        Map<String, Integer> sagaMoviesMap = new HashMap<>();
+        Map<String, Integer> nonSagaMoviesMap = new HashMap<>();
         for (String movieName : inputMovieList) {
             String movieNameInUpperCase = movieName.toUpperCase();
             if (STANDARD_SET.contains(movieNameInUpperCase)) {
@@ -88,8 +88,8 @@ public class PriceCalculatorServiceImpl implements PriceCalculatorService {
         sagaMoviesTotalAmount = sagaMoviesMap.containsKey(SAGA_MOVIE_3) ? sagaMoviesTotalAmount + sagaMoviesMap.get(SAGA_MOVIE_3) : sagaMoviesTotalAmount;
         Integer discountedAmount = sagaMoviesTotalAmount * (100 - discountToApply) / 100;
         Integer nonSagaMoviesTotalAmount = 0;
-        for (String key : nonSagaMoviesMap.keySet()) {
-            nonSagaMoviesTotalAmount += nonSagaMoviesMap.get(key);
+        for (Map.Entry<String,Integer> entry : nonSagaMoviesMap.entrySet()) {
+            nonSagaMoviesTotalAmount += entry.getValue();
         }
         LOGGER.log(Level.FINE, "Saga movies discounted amount: {0}", discountedAmount);
         LOGGER.log(Level.FINE, "Non-Saga movies amount: {0}", nonSagaMoviesTotalAmount);
